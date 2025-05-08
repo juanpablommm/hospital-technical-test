@@ -1,0 +1,15 @@
+spring:
+  application:
+  name: hospital
+#TODO change to enviroments
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    password: 060900diminombre
+    username: juampis
+    url: jdbc:postgresql://localhost:5432/postgres
+
+server:
+  port: 8081
+  servlet:
+    context-path: /hospital
+
