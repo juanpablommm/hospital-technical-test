@@ -3,6 +3,7 @@ package com.technical.test.hospital.users.api;
 import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,14 +11,11 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Setter
-@Getter
+@Data
 public class UserResponseDto {
 
-	private String names;
-	private String surnames;
-	private String username;
+	private String fullName;
 	private String email;
 	private Boolean enabled;
-	private Set<String> roles;
+	private Integer age;
 }

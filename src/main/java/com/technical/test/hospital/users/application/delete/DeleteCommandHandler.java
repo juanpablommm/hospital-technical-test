@@ -1,8 +1,10 @@
 package com.technical.test.hospital.users.application.delete;
 
-import com.challenge.ecommerce.tps.user_management.users.domain.UserRepository;
+import com.technical.test.hospital.users.domain.UserRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.stereotype.Component;
 
+@Component
 public class DeleteCommandHandler {
 
 	private final UserRepository userRepository;

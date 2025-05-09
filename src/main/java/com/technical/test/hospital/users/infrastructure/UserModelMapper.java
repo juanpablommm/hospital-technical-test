@@ -1,10 +1,9 @@
 package com.technical.test.hospital.users.infrastructure;
 
-import com.challenge.ecommerce.tps.user_management.role.infrastructure.RoleEntity;
-import com.challenge.ecommerce.tps.user_management.users.domain.User;
+
 import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
+
+import com.technical.test.hospital.users.domain.UserDomain;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -16,27 +15,22 @@ public class UserModelMapper implements UserMapper {
 	private final PasswordEncoder passwordEncoder;
 
 	@Override
-	public UserEntity toJpaEntity(User user) {
-		return new UserEntity(user.getId(), user.getNames(), user.getSurnames(), user.getUsername(),
-				this.passwordEncoder(user.getPassword()), user.getEmail(), user.getEnabled(),
-				this.getRolesForJpa(user.getRoles()));
+	public UserEntity toEntity(UserDomain user) {
+		return UserEntity.builder()
+				.email(user.email())
+				.fullName(user.fullname())
+				.password(this.passwordEncoder(user.password()))
+				.age(user.age())
+				.build();
 	}
 
 	@Override
-	public User toDomain(UserEntity userEntity) {
-		return new User(userEntity.getUserId(), userEntity.getNames(), userEntity.getSurnames(),
-				userEntity.getUsername(), userEntity.getPassword(), userEntity.getEmail(), userEntity.getEnabled(),
-				this.getRolesForDomain(userEntity.getRoles()));
+	public UserDomain toDomain(UserEntity userEntity) {
+		return new UserDomain(userEntity.getFullName(),
+				userEntity.getPassword(), userEntity.getEmail(), userEntity.getAge());
 	}
 
-	private Set<RoleEntity> getRolesForJpa(Set<String> roles) {
-		RoleEntity.RoleEntityBuilder roleBuilder = RoleEntity.builder();
-		return roles.stream().map(rol -> roleBuilder.roleName(rol).build()).collect(Collectors.toSet());
-	}
 
-	private Set<String> getRolesForDomain(Set<RoleEntity> roles) {
-		return roles.stream().map(RoleEntity::getRoleName).collect(Collectors.toSet());
-	}
 
 	private String passwordEncoder(final String password) {
 		if (Objects.isNull(password) || password.matches("^\\$2[ayb]\\$\\d{2}\\$[./A-Za-z0-9]{53}$"))

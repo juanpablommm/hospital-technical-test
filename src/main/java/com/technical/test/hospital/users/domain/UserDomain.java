@@ -1,54 +1,28 @@
 package com.technical.test.hospital.users.domain;
 
 import java.util.Objects;
-import java.util.Set;
 
-public class User {
-
-	private final Long id;
-	private final String fullname;
-	private final String password;
-	private final String email;
-	private final Integer age;
-
-
-	public User(Long id, String fullname, String password, String email, Integer age) {
-		this.id = id;
-		this.fullname = fullname;
-		this.password = password;
-		this.email = email;
-		this.age = age;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public String getFullname() {
-		return fullname;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public Integer getAge() {
-		return age;
-	}
+public record UserDomain(String fullname, String password, String email, Integer age) {
 
 	@Override
 	public boolean equals(Object o) {
 		if (o == null || getClass() != o.getClass()) return false;
-		User user = (User) o;
-		return Objects.equals(id, user.id) && Objects.equals(fullname, user.fullname) && Objects.equals(password, user.password) && Objects.equals(email, user.email) && Objects.equals(age, user.age);
+		UserDomain that = (UserDomain) o;
+		return Objects.equals(age, that.age) && Objects.equals(email, that.email) && Objects.equals(fullname, that.fullname) && Objects.equals(password, that.password);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, fullname, password, email, age);
+		return Objects.hash(fullname, password, email, age);
+	}
+
+	@Override
+	public String toString() {
+		return "UserDomain{" +
+				"fullname='" + fullname + '\'' +
+				", password='" + password + '\'' +
+				", email='" + email + '\'' +
+				", age=" + age +
+				'}';
 	}
 }

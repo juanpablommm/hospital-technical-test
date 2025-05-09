@@ -1,7 +1,8 @@
 package com.technical.test.hospital.authentication.infrastructure;
 
-import com.challenge.ecommerce.tps.user_management.users.infrastructure.UserEntity;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.technical.test.hospital.users.infrastructure.UserEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,18 +31,18 @@ import java.time.OffsetDateTime;
 public class RefreshTokenEntity {
 
 	@Id
-	@Column(name = "refresh_token_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long refreshTokenId;
+	private Long id;
 
-	@Column(name = "token")
+	@Column(name = "refresh_token")
 	private String token;
 
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSSXXX", timezone = "America/Bogota")
 	@Column(name = "expiry_time")
 	private OffsetDateTime expiryTime;
 
+
 	@OneToOne()
-	@JoinColumn(name = "user_id")
+	@JoinColumn(name = "id_user")
 	private UserEntity user;
 }

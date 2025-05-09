@@ -1,7 +1,8 @@
 package com.technical.test.hospital.authentication.infrastructure;
 
-import com.challenge.ecommerce.tps.user_management.authentication.domain.AuthRefreshTokenRepository;
-import com.challenge.ecommerce.tps.user_management.authentication.domain.RefreshToken;
+
+import com.technical.test.hospital.authentication.domain.AuthRefreshTokenRepository;
+import com.technical.test.hospital.authentication.domain.RefreshToken;
 import org.springframework.stereotype.Component;
 
 import java.time.OffsetDateTime;

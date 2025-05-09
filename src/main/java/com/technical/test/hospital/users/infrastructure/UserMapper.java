@@ -1,10 +1,11 @@
 package com.technical.test.hospital.users.infrastructure;
 
-import com.challenge.ecommerce.tps.user_management.users.domain.User;
+
+import com.technical.test.hospital.users.domain.UserDomain;
 
 public interface UserMapper {
 
-	UserEntity toJpaEntity(User user);
+	UserEntity toEntity(UserDomain user);
 
-	User toDomain(UserEntity userEntity);
+	UserDomain toDomain(UserEntity userEntity);
 }

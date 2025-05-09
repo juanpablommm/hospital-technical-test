@@ -1,9 +1,12 @@
 package com.technical.test.hospital.users.application.create;
 
-import com.challenge.ecommerce.tps.user_management.users.domain.User;
-import com.challenge.ecommerce.tps.user_management.users.domain.UserRepository;
-import jakarta.transaction.Transactional;
 
+import com.technical.test.hospital.users.domain.UserDomain;
+import com.technical.test.hospital.users.domain.UserRepository;
+import jakarta.transaction.Transactional;
+import org.springframework.stereotype.Component;
+
+@Component
 public class CreateUserCommandHandler {
 
 	private final UserRepository userRepository;
@@ -13,7 +16,7 @@ public class CreateUserCommandHandler {
 	}
 
 	@Transactional
-	public void handler(User user) {
-		this.userRepository.save(user);
+	public void handler(UserDomain userDomain) {
+		this.userRepository.save(userDomain);
 	}
 }

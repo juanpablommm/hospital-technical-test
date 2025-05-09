@@ -1,15 +1,16 @@
 package com.technical.test.hospital.authentication.infrastructure;
 
-import com.challenge.ecommerce.tps.user_management.users.domain.User;
-import com.challenge.ecommerce.tps.user_management.users.domain.UserRepository;
-import com.challenge.ecommerce.tps.user_management.users.infrastructure.UserModelMapper;
+
+import com.technical.test.hospital.shared.infrastructure.HospitalApplicationException;
+import com.technical.test.hospital.users.domain.UserDomain;
+import com.technical.test.hospital.users.domain.UserRepository;
+import com.technical.test.hospital.users.infrastructure.UserModelMapper;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.util.Objects;
 
 @Service
 @AllArgsConstructor
@@ -21,11 +22,9 @@ public class AuthUserDetailsService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(final String email) throws UsernameNotFoundException {
-		User user = userRepository.findByEmail(email)
-				.orElseThrow(() -> new AuthInfrastructureException("User with email not found in UserDetailsService"));
+		UserDomain user = userRepository.findByEmail(email)
+				.orElseThrow(() -> new HospitalApplicationException("User not fount", HttpStatus.NOT_FOUND));
 
-		if (Objects.equals(Boolean.FALSE, user.getEnabled()))
-			throw new AuthInfrastructureException("User was disabled");
-		return this.userMapper.toJpaEntity(user);
+		return this.userMapper.toEntity(user);
 	}
 }

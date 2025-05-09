@@ -6,15 +6,14 @@ import java.util.OptionalLong;
 
 public interface UserRepository {
 
-	Optional<User> findByEmail(final String email);
+	Optional<UserDomain> findByEmail(final String email);
 
-	Optional<User> findByUsername(final String username);
 
 	OptionalLong findUserIdByEmail(final String email);
 
-	void save(final User user);
+	void save(final UserDomain user);
 
 	void delete(final String username);
 
-	List<User> findAll(final int page, final int limit);
+	List<UserDomain> findAll(final int page, final int limit);
 }

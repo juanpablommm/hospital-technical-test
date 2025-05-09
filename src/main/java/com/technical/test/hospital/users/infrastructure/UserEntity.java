@@ -1,43 +1,38 @@
 package com.technical.test.hospital.users.infrastructure;
 
-import com.challenge.ecommerce.tps.user_management.role.infrastructure.RoleEntity;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.technical.test.hospital.authentication.infrastructure.RefreshTokenEntity;
+import com.technical.test.hospital.quote.infraestructure.QuoteEntity;
 import jakarta.persistence.*;
 import java.util.Collection;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Table(name = "users")
-@Getter
-@Setter
+@Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 public class UserEntity implements UserDetails {
 
 	@Id
-	@Column(name = "user_id")
+	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long userId;
+	private Long id;
 
-	@Column(name = "names")
-	private String names;
-
-	@Column(name = "surnames")
-	private String surnames;
-
-	@Column(name = "username")
-	private String username;
+	@Column(name = "fullname")
+	private String fullName;
 
 	@Column(name = "password")
 	private String password;
@@ -45,35 +40,22 @@ public class UserEntity implements UserDetails {
 	@Column(name = "email")
 	private String email;
 
-	@Column(name = "enabled")
-	private Boolean enabled;
+	@Column(name = "age")
+	private Integer age;
 
-	@ManyToMany
-	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-	private Set<RoleEntity> roles = new HashSet<>();
+	@JsonIgnore
+	@OneToOne(mappedBy = "user")
+	private RefreshTokenEntity token;
+
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return this.roles.stream().map(RoleEntity::getRoleName).map(SimpleGrantedAuthority::new).toList();
+		return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"));
 	}
 
 	@Override
-	public boolean isAccountNonExpired() {
-		return UserDetails.super.isAccountNonExpired();
+	public String getUsername() {
+		return this.email;
 	}
 
-	@Override
-	public boolean isAccountNonLocked() {
-		return UserDetails.super.isAccountNonLocked();
-	}
-
-	@Override
-	public boolean isCredentialsNonExpired() {
-		return UserDetails.super.isCredentialsNonExpired();
-	}
-
-	@Override
-	public boolean isEnabled() {
-		return UserDetails.super.isEnabled();
-	}
 }

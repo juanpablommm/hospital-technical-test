@@ -1,8 +1,13 @@
 package com.technical.test.hospital.users.application.find;
 
-import com.challenge.ecommerce.tps.user_management.users.domain.User;
-import com.challenge.ecommerce.tps.user_management.users.domain.UserRepository;
 
+import com.technical.test.hospital.shared.infrastructure.HospitalApplicationException;
+import com.technical.test.hospital.users.domain.UserDomain;
+import com.technical.test.hospital.users.domain.UserRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
+
+@Component
 public class FindUserCommandHandler {
 
 	private final UserRepository userRepository;
@@ -11,8 +16,8 @@ public class FindUserCommandHandler {
 		this.userRepository = userRepository;
 	}
 
-	public User handler(final String username) {
-		return this.userRepository.findByUsername(username)
-				.orElseThrow(() -> new UserNotFoundException(String.format("User %s not found", username)));
+	public UserDomain handler(final String username) {
+		return this.userRepository.findByEmail(username)
+				.orElseThrow(() -> new HospitalApplicationException("User not found", HttpStatus.NOT_FOUND));
 	}
 }

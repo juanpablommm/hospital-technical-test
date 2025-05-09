@@ -17,5 +17,5 @@ CREATE TABLE public.quotes (
 
 -- public.quotes foreign keys
 
-ALTER TABLE public.quotes ADD CONSTRAINT quotes_doctor_fk FOREIGN KEY (id_doctor) REFERENCES public.doctor(id);
+ALTER TABLE public.quotes ADD CONSTRAINT quotes_doctor_fk FOREIGN KEY (id_doctor) REFERENCES public.doctors(id);
 ALTER TABLE public.quotes ADD CONSTRAINT quotes_users_fk FOREIGN KEY (id_user) REFERENCES public.users(id);
